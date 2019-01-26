@@ -1,6 +1,6 @@
 # gatsby-source-potterapi
 
-Source plugin for https://www.potterapi.com/
+Source plugin for https://www.potterapi.com/. You can find an example in the [example](https://github.com/LekoArts/gatsby-source-potterapi/tree/master/example) directory.
 
 ## Install
 
