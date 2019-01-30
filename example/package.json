@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "develop": "gatsby develop",
-    "dev": "gatsby develop -o",
+    "dev": "GATSBY_GRAPHQL_IDE=playground gatsby develop -o",
     "start": "npm run develop",
     "build": "gatsby build",
     "serve": "gatsby serve"
