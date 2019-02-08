@@ -48,6 +48,7 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, { k
     const { data: houses } = await axiosClient.get(`/houses?key=${key}`)
     const { data: characters } = await axiosClient.get(`/characters?key=${key}`)
     const { data: spells } = await axiosClient.get(`/spells?key=${key}`)
+    const { data: sortingHat } = await axiosClient.get(`/sortingHat`)
 
     // The API response is an array of objects
     // Loop over this array. The individual item (object) is the node then
@@ -83,6 +84,19 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, { k
 
       createNode(node)
     })
+
+    const sortingNode = {
+      house: sortingHat,
+      id: createNodeId(`potterapi-${sortingHat}`),
+      parent: null,
+      children: [],
+      internal: {
+        type: `HarryPotterSortingHat`,
+        content: JSON.stringify(sortingHat),
+        contentDigest: createContentDigest(sortingHat),
+      },
+    }
+    createNode(sortingNode)
   } catch (e) {
     console.error(e)
     process.exit(1)
