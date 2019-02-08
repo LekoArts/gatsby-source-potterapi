@@ -8,8 +8,8 @@ module.exports = {
       resolve: 'gatsby-source-potterapi',
       options: {
         key: process.env.KEY,
-      }
+      },
     },
     'gatsby-plugin-netlify',
-  ]
+  ],
 }

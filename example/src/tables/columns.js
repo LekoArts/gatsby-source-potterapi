@@ -72,7 +72,7 @@ const charsColumns = [
   {
     Header: 'Role',
     accessor: 'role',
-    Cell: ({ value }) => (value === null ? '' : (value === 'student' ? 'Student' : value)),
+    Cell: ({ value }) => (value === null ? '' : value === 'student' ? 'Student' : value),
     filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ['role'] }),
     filterAll: true,
   },
