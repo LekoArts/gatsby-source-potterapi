@@ -35,7 +35,7 @@ const Index = ({
     if (localTheme) {
       setTheme(localTheme)
     }
-  }, {})
+  }, [])
 
   const spellsUnique = spellsDuplicates.reduce((unique, o) => {
     if (!unique.some(obj => obj.node.spell === o.node.spell)) {
