@@ -13,19 +13,19 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.14",
-    "@fortawesome/free-solid-svg-icons": "^5.7.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.19",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "gatsby": "^2.0.117",
-    "gatsby-plugin-netlify": "^2.0.9",
-    "gatsby-source-potterapi": "^1.0.1",
-    "match-sorter": "^2.3.0",
-    "react": "^16.8.1",
-    "react-dom": "^16.8.1",
-    "react-helmet": "^5.2.0",
+    "gatsby": "^2.13.1",
+    "gatsby-plugin-netlify": "^2.1.0",
+    "gatsby-source-potterapi": "^1.0.2",
+    "match-sorter": "^3.1.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-helmet": "^5.2.1",
     "react-table": "6.8.6"
   },
   "devDependencies": {
-    "prettier": "^1.16.4"
+    "prettier": "^1.18.2"
   }
 }

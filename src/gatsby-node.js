@@ -3,12 +3,30 @@ const axios = require('axios')
 // The first param are the functions passed through Gatsby, the second param is the "pluginOptions"
 // Both params get destructured instantly, you get "key" from the pluginOpions for example
 
-exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, { key }) => {
+exports.sourceNodes = async ({ actions, createNodeId, createContentDigest, reporter }, { key }) => {
   const { createNode } = actions
 
   // Throw an error early if the API key is missing
+  // Gatsby provides an API for that, too: https://www.gatsbyjs.org/docs/node-api-helpers/#reporter
   if (!key) {
-    throw new Error('Please define an API key')
+    reporter.panic(`
+Please define an API key to gatsby-source-potterapi.
+
+You should use the keyword "key" in the options of your entry (in gatsby-config.js), for example:
+
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-source-potterapi',
+      options: {
+        key: process.env.KEY,
+      },
+    },
+  ],
+}
+
+To learn more on how to use environment variables, head over to the docs: https://www.gatsbyjs.org/docs/environment-variables/
+    `)
   }
 
   const axiosClient = axios.create({
@@ -98,7 +116,6 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, { k
     }
     createNode(sortingNode)
   } catch (e) {
-    console.error(e)
-    process.exit(1)
+    reporter.panicOnBuild(`An error occured in gatsby-source-potterapi.`, new Error(e))
   }
 }
