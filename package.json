@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-potterapi",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "index.js",
   "repository": "git@github.com:LekoArts/gatsby-source-potterapi.git",
   "author": "LekoArts <lekoarts@gmail.com>",
