@@ -1,5 +1,65 @@
 const axios = require('axios')
 
+// Create the Schema Types with Gatsby's schema customization API
+// https://www.gatsbyjs.org/docs/schema-customization/
+// This allows the schema to be explicitly typed and also easy foreign-key relationships
+
+// For the foreign-key relationship go here:
+// https://www.gatsbyjs.org/docs/schema-customization/#foreign-key-fields
+// The API for "HarryPotterHouse" normally retunrs for "members" an array of "_id"
+// Therefore it should be linked by "_id"
+
+// The API returns for "house" the name, therefore it needs to be linked by that
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+
+  createTypes(`
+    type HarryPotterHouse implements Node {
+      _id: String
+      colors: [String]
+      founder: String
+      headOfHouse: String
+      houseGhost: String
+      mascot: String
+      members: [HarryPotterCharacter] @link(by: "_id")
+      name: String
+      school: String
+      values: [String]
+    }
+    
+    type HarryPotterCharacter implements Node {
+      _id: String
+      alias: String
+      animagus: String
+      bloodStatus: String
+      boggart: String
+      deathEater: Boolean
+      dumbledoresArmy: Boolean
+      house: HarryPotterHouse @link(by: "name")
+      ministryOfMagic: Boolean
+      name: String
+      orderOfThePhoenix: Boolean
+      patronus: String
+      role: String
+      school: String
+      species: String
+      wand: String
+    }
+    
+    type HarryPotterSpell implements Node {
+      _id: String
+      effect: String
+      spell: String
+      type: String
+    }
+    
+    type HarryPotterSortingHat implements Node {
+      house: String
+    }
+  `)
+}
+
 // The first param are the functions passed through Gatsby, the second param is the "pluginOptions"
 // Both params get destructured instantly, you get "key" from the pluginOpions for example
 
@@ -33,23 +93,12 @@ To learn more on how to use environment variables, head over to the docs: https:
     baseURL: 'https://www.potterapi.com/v1/',
   })
 
-  // Helper function
-  //
-  // The API returns a unique ID for every item under the "_id" property
-  // This is nice as "id" is a reserved word in Gatsby (see nodeMeta)
-  // If it would be "id" you'd want to manually set "id" to "_id" to circumvent this issue
-  //
-  // The purpose of this helper function is to get the node with the desired "id"
-  // For that the function generates with "createNodeId" in the same way as in "nodeMeta" the "id"
-
-  const getID = node => (node ? createNodeId(`potterapi-${node._id}`) : null)
-
   const nodeMeta = ({ node, name }) => ({
     id: createNodeId(`potterapi-${node._id}`), // Unique identifier for the nodes. You can also search for that (see getID)
     parent: null,
     children: [],
     internal: {
-      type: `HarryPotter${name}`, // Defines the name your query by, e.g. HarryPotterHouses
+      type: `HarryPotter${name}`, // Use the name defined in above schema types
       content: JSON.stringify(node),
       contentDigest: createContentDigest(node),
     },
@@ -79,19 +128,6 @@ To learn more on how to use environment variables, head over to the docs: https:
     })
 
     characters.forEach(character => {
-      // Characters go to different houses (Gryffindor etc.)
-      // The API gives back for "character.house" : 'Gryffindor'
-      // But that's only the name. If you want to get more data about a house while querying for characters
-      // you can't get that
-      //
-      // Unless you replace the "house___NODE" with your own content
-      // "house___NODE" would be created with the "character.house" key automatically, here you overwrite it
-      // The node should have the "id" of the specific house created in the "houses.forEach" loop
-      // In that loop the 'Gryffindor' house was created with the "id" (of nodeMeta). Now you search for that
-      // The search itself is: Find the house with the same name as "character.house"
-
-      character.house___NODE = getID(houses.find(h => h.name === character.house))
-
       const node = { ...character, ...nodeMeta({ node: character, name: 'Character' }) }
 
       createNode(node)
@@ -116,6 +152,6 @@ To learn more on how to use environment variables, head over to the docs: https:
     }
     createNode(sortingNode)
   } catch (e) {
-    reporter.panicOnBuild(`An error occured in gatsby-source-potterapi.`, new Error(e))
+    reporter.panicOnBuild(`An error occured in gatsby-source-potterapi.`, e)
   }
 }
