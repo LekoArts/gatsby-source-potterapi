@@ -2,5 +2,3 @@
   base = "example/"
   publish = "example/public"
   command = "gatsby build"
-[build.environment]
-  NODE_VERSION = "12.13.0"
