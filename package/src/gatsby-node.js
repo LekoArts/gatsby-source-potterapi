@@ -73,7 +73,7 @@ To learn more on how to use environment variables, head over to the docs: https:
     // So in the first example "house" is the individual object
 
     houses.forEach(house => {
-      const node = Object.assign({}, house, nodeMeta({ node: house, name: 'House' }))
+      const node = { ...house, ...nodeMeta({ node: house, name: 'House' }) }
 
       createNode(node)
     })
@@ -92,13 +92,13 @@ To learn more on how to use environment variables, head over to the docs: https:
 
       character.house___NODE = getID(houses.find(h => h.name === character.house))
 
-      const node = Object.assign({}, character, nodeMeta({ node: character, name: 'Character' }))
+      const node = { ...character, ...nodeMeta({ node: character, name: 'Character' }) }
 
       createNode(node)
     })
 
     spells.forEach(spell => {
-      const node = Object.assign({}, spell, nodeMeta({ node: spell, name: 'Spell' }))
+      const node = { ...spell, ...nodeMeta({ node: spell, name: 'Spell' }) }
 
       createNode(node)
     })
