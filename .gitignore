@@ -19,7 +19,12 @@ coverage
 # node-waf configuration
 .lock-wscript
 
-/*.js
 node_modules
 .idea
-!index.js
+.vscode
+
+.env
+.env.*
+
+public
+.cache
