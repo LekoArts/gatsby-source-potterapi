@@ -31,8 +31,8 @@ module.exports = {
       resolve: 'gatsby-source-potterapi',
       options: {
         key: process.env.POTTER_KEY,
-      }
-    }
-  ]
+      },
+    },
+  ],
 }
 ```

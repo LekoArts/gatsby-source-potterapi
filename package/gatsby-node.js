@@ -121,19 +121,19 @@ To learn more on how to use environment variables, head over to the docs: https:
     // Loop over this array. The individual item (object) is the node then
     // So in the first example "house" is the individual object
 
-    houses.forEach(house => {
+    houses.forEach((house) => {
       const node = { ...house, ...nodeMeta({ node: house, name: 'House' }) }
 
       createNode(node)
     })
 
-    characters.forEach(character => {
+    characters.forEach((character) => {
       const node = { ...character, ...nodeMeta({ node: character, name: 'Character' }) }
 
       createNode(node)
     })
 
-    spells.forEach(spell => {
+    spells.forEach((spell) => {
       const node = { ...spell, ...nodeMeta({ node: spell, name: 'Spell' }) }
 
       createNode(node)
