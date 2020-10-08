@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { graphql } from 'gatsby'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaw, faHeading, faGhost, faHatWizard } from '@fortawesome/free-solid-svg-icons'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 
@@ -17,14 +17,14 @@ function capitalize(string) {
 
 const Index = ({
   data: {
-    spells: { edges: spellsDuplicates },
-    houses: { edges: houses },
-    chars: { edges: charsNotNormalized },
+    spells: { nodes: spellsDuplicates },
+    houses: { nodes: houses },
+    chars: { nodes: chars },
   },
 }) => {
   const [theme, setTheme] = useState('gryffindor')
 
-  const handleOptionChange = e => {
+  const handleOptionChange = (e) => {
     localStorage.setItem('theme', e.target.value)
     setTheme(e.target.value)
   }
@@ -37,15 +37,12 @@ const Index = ({
     }
   }, [])
 
-  const spellsUnique = spellsDuplicates.reduce((unique, o) => {
-    if (!unique.some(obj => obj.node.spell === o.node.spell)) {
+  const spells = spellsDuplicates.reduce((unique, o) => {
+    if (!unique.some((obj) => obj.spell === o.spell)) {
       unique.push(o)
     }
     return unique
   }, [])
-
-  const spells = spellsUnique.map(({ node }) => ({ ...node }))
-  const chars = charsNotNormalized.map(({ node }) => ({ ...node }))
 
   const pageSizeOptions = [10, 20, 50, 100]
 
@@ -176,7 +173,7 @@ const Index = ({
         <main>
           <h2 id="houses">Houses</h2>
           <div className="grid">
-            {houses.map(({ node: house }) => (
+            {houses.map((house) => (
               <div className="grid-item" key={house._id}>
                 <h3>{house.name}</h3>
                 <h4>Information</h4>
@@ -196,7 +193,7 @@ const Index = ({
                 </div>
                 <h4>Values</h4>
                 <div className="grid-item__info">
-                  {house.values.map(value => (
+                  {house.values.map((value) => (
                     <div className="grid-item__info__item" key={value}>
                       {capitalize(value)}
                     </div>
@@ -243,42 +240,36 @@ export default Index
 export const query = graphql`
   query IndexQuery {
     houses: allHarryPotterHouse(sort: { fields: name, order: ASC }) {
-      edges {
-        node {
-          _id
-          name
-          mascot
-          headOfHouse
-          houseGhost
-          founder
-          values
-          colors
-        }
+      nodes {
+        _id
+        name
+        mascot
+        headOfHouse
+        houseGhost
+        founder
+        values
+        colors
       }
     }
     spells: allHarryPotterSpell {
-      edges {
-        node {
-          spell
-          type
-          effect
-        }
+      nodes {
+        spell
+        type
+        effect
       }
     }
     chars: allHarryPotterCharacter {
-      edges {
-        node {
+      nodes {
+        name
+        role
+        house {
           name
-          role
-          house {
-            name
-          }
-          orderOfThePhoenix
-          dumbledoresArmy
-          deathEater
-          alias
-          patronus
         }
+        orderOfThePhoenix
+        dumbledoresArmy
+        deathEater
+        alias
+        patronus
       }
     }
   }

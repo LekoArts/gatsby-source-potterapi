@@ -40,7 +40,7 @@ const spellsColumns = [
     },
     Filter: ({ filter, onChange }) => (
       <select
-        onChange={event => onChange(event.target.value)}
+        onChange={(event) => onChange(event.target.value)}
         style={{ width: '100%' }}
         value={filter ? filter.value : 'all'}
       >
@@ -101,7 +101,7 @@ const charsColumns = [
     },
     Filter: ({ filter, onChange }) => (
       <select
-        onChange={event => onChange(event.target.value)}
+        onChange={(event) => onChange(event.target.value)}
         style={{ width: '100%' }}
         value={filter ? filter.value : 'all'}
       >
@@ -146,7 +146,7 @@ const charsColumns = [
     },
     Filter: ({ filter, onChange }) => (
       <select
-        onChange={event => onChange(event.target.value)}
+        onChange={(event) => onChange(event.target.value)}
         style={{ width: '100%' }}
         value={filter ? filter.value : 'all'}
       >
@@ -174,7 +174,7 @@ const charsColumns = [
     },
     Filter: ({ filter, onChange }) => (
       <select
-        onChange={event => onChange(event.target.value)}
+        onChange={(event) => onChange(event.target.value)}
         style={{ width: '100%' }}
         value={filter ? filter.value : 'all'}
       >
@@ -202,7 +202,7 @@ const charsColumns = [
     },
     Filter: ({ filter, onChange }) => (
       <select
-        onChange={event => onChange(event.target.value)}
+        onChange={(event) => onChange(event.target.value)}
         style={{ width: '100%' }}
         value={filter ? filter.value : 'all'}
       >
