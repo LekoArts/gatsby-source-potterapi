@@ -6,9 +6,7 @@ module.exports = {
   plugins: [
     {
       resolve: 'gatsby-source-potterapi',
-      options: {
-        key: process.env.KEY,
-      },
+      options: {},
     },
     'gatsby-plugin-netlify',
   ],
