@@ -15,6 +15,6 @@
     "gatsby": ">=2.0.0"
   },
   "dependencies": {
-    "axios": "^0.19.0"
+    "axios": "^0.20.0"
   }
 }
