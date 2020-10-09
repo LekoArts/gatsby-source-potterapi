@@ -1,5 +1,21 @@
 const axios = require('axios')
 
+// Throw an error early if the API key is missing
+// Gatsby provides an API for that, too: https://www.gatsbyjs.com/docs/configuring-usage-with-plugin-options/
+
+exports.pluginOptionsSchema = ({ Joi }) =>
+  Joi.object({
+    key: Joi.string().required().messages({
+      'any.required': `"key" is required. Please provide an API key for https://www.potterapi.com/
+
+You can obtain this by signing up for an account here: https://www.potterapi.com/login/
+
+We'd also recommend to place the API key in an .env file with API_KEY=your-key
+To learn more on how to use environment variables, head over to the docs: https://www.gatsbyjs.com/docs/environment-variables/
+`,
+    }),
+  })
+
 // Create the Schema Types with Gatsby's schema customization API
 // https://www.gatsbyjs.org/docs/schema-customization/
 // This allows the schema to be explicitly typed and also easy foreign-key relationships
@@ -65,29 +81,6 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 exports.sourceNodes = async ({ actions, createNodeId, createContentDigest, reporter }, { key }) => {
   const { createNode } = actions
-
-  // Throw an error early if the API key is missing
-  // Gatsby provides an API for that, too: https://www.gatsbyjs.org/docs/node-api-helpers/#reporter
-  if (!key) {
-    reporter.panic(`
-Please define an API key to gatsby-source-potterapi.
-
-You should use the keyword "key" in the options of your entry (in gatsby-config.js), for example:
-
-module.exports = {
-  plugins: [
-    {
-      resolve: 'gatsby-source-potterapi',
-      options: {
-        key: process.env.KEY,
-      },
-    },
-  ],
-}
-
-To learn more on how to use environment variables, head over to the docs: https://www.gatsbyjs.org/docs/environment-variables/
-    `)
-  }
 
   const axiosClient = axios.create({
     baseURL: 'https://www.potterapi.com/v1/',
